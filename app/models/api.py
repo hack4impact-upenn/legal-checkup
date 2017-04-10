@@ -31,3 +31,11 @@ class Api(db.Model):
 
     def __repr__(self):
         return '<Api \'%s %s %s\'>' % (self.name, self.region, self.description)
+
+    def get_params(self):
+        params = []
+        for assoc in self.parameters:
+            p = {'parameter': assoc.parameter,
+                'description': assoc.parameter_description}
+            params.append(p)
+        return params
