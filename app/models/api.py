@@ -2,11 +2,11 @@ from .. import db
 
 class ApiParameterLink(db.Model):
     __tablename__ = 'api_parameter_link'
-    api_id = db.Column(db.Integer, db.ForeignKey('api.id'), primary_key=True)
-    parameter_id = db.Column(db.Integer, db.ForeignKey('parameter.id'), primary_key=True)
-    parameter_description = db.Column(String(128))
-    api = db.relationship('Api', backref=db.backref('parameter_associations'))
-    parameter = db.relationship('Parameter', backref=db.backref('api_associations'))
+    api_id = db.Column(db.Integer, db.ForeignKey('apis.id'), primary_key=True)
+    parameter_id = db.Column(db.Integer, db.ForeignKey('parameters.id'), primary_key=True)
+    parameter_description = db.Column(db.String(128))
+    api = db.relationship('Api', backref='parameter_associations')
+    parameter = db.relationship('Parameter', backref='api_associations')
 
     def __init__(self, api, param, description):
         self.api = api
