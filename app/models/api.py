@@ -27,8 +27,14 @@ class Api(db.Model):
 
     def add_params(self, params):
         for param, description in params:
-            self.api_parameter_link.append(ApiParameterLink(api=self,
+            self.parameter_associations.append(ApiParameterLink(api=self,
                 param=param, description=description))
+
+    def get_params(self):
+        params = []
+        for link in self.parameter_associations:
+            params.append((link.parameter, link.parameter_description))
+        return params
 
     def __init__(self, name, region, description):
         self.name = name
@@ -45,6 +51,12 @@ class Parameter(db.Model):
     param_type = db.Column(db.String(64))
     count = db.Column(db.Integer)
     apis = db.relationship('Api', secondary='api_parameter_link')
+
+    def get_apis(self):
+        apis = []
+        for link in self.api_associations:
+            apis.append(link.api)
+        return apis
 
     def __init__(self, name, param_type, count):
         self.name = name
