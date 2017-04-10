@@ -58,6 +58,9 @@ class Parameter(db.Model):
             apis.append(link.api)
         return apis
 
+    def incr_count(self):
+        self.count += 1
+
     def __init__(self, name, param_type, count):
         self.name = name
         self.param_type = param_type
