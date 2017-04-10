@@ -1,11 +1,18 @@
 from .. import db
 
-association_table = db.Table('association_table',
-    db.Column('api_id', db.Integer, db.ForeignKey('api.id')),
-    db.Column('parameter_id', db.Integer, db.ForeignKey('parameter.id'))
-    db.Column('parameter_description', db.String(128),
-        db.ForeignKey('parameter_description.id'))
-)
+class Association(db.Model):
+    __tablename__ = 'assocation'
+    api_id = Column(Integer, ForeignKey('api.id'), primary_key=True)
+    parameter_id = Column(Integer, ForeignKey('parameter.id'), primary_key=True)
+    parameter_description = Column(String(128))
+    parameter = db.relationship('Parameter', backref='api_associations')
+
+    def __init__(self, parameter_description):
+        self.parameter_description = parameter_description
+
+    def __repr__(self):
+        return '<Association \'%s %s %s\'>' % (self.api_id, self.parameter_id,
+            self.parameter_description)
 
 class Api(db.Model):
     __tablename__ = 'apis'
@@ -14,9 +21,8 @@ class Api(db.Model):
     region = db.Column(db.String(64))
     description = db.Column(db.String(128))
     parameters = db.relationship(
-        'Parameter',
-        secondary=association_table,
-        backref=db.backref('parameters', lazy='dynamic'))
+        'Association',
+        backref=db.backref('parameter', lazy='dynamic'))
 
     def __init__(self, name, region, description):
         self.name = name

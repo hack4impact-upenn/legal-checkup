@@ -13,4 +13,5 @@ class Parameter(db.Model):
         self.count = count
 
     def __repr__(self):
-        return '<Parameter \'%s %s %s\'>' % (self.name, self.param_type, self.count)
+        return '<Parameter \'%s %s %s\'>' % (self.name, self.param_type,
+            self.count)
