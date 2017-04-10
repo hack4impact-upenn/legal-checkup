@@ -31,10 +31,7 @@ class Api(db.Model):
                 param=param, description=description))
 
     def get_params(self):
-        params = []
-        for link in self.parameter_associations:
-            params.append((link.parameter, link.parameter_description))
-        return params
+        return ApiParameterLink.query.filter_by(api_id=self.id).all()
 
     def __init__(self, name, region, description):
         self.name = name
@@ -53,10 +50,7 @@ class Parameter(db.Model):
     apis = db.relationship('Api', secondary='api_parameter_link')
 
     def get_apis(self):
-        apis = []
-        for link in self.api_associations:
-            apis.append(link.api)
-        return apis
+        return ApiParameterLink.query.filter_by(parameter_id=self.id).all()
 
     def incr_count(self):
         self.count += 1
