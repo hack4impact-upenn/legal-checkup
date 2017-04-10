@@ -182,3 +182,29 @@ def update_editor_contents():
     db.session.commit()
 
     return 'OK', 200
+
+
+@admin.route('/change-api', methods=['PATCH'])
+@login_required
+@admin_required
+def change_api():
+
+
+@admin.route('/change-parameter', methods=['PUT'])
+@login_required
+@admin_required
+def change_api_parameters():
+
+
+@admin.route('/remove-parameter', methods=['DELETE'])
+@login_required
+@admin_required
+def delete_api():
+
+
+@admin.route('/remove-api', methods=['DELETE'])
+@login_required
+@admin_required
+def delete_api_parameters():
+
+
