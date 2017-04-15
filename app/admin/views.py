@@ -183,10 +183,3 @@ def update_editor_contents():
 
     return 'OK', 200
 
-
-@admin.route('/api/<int:api_id>/info', methods=['GET'])
-@login_required
-def get_api_info(api_id):
-    id = models.Api.query.get(api_id) 
-    return jsonify({id.description})
-
