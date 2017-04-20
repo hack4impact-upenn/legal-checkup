@@ -8,20 +8,8 @@ from . import main
 def index():
     return render_template('main/index.html')
 
-
 @main.route('/about')
 def about():
     editable_html_obj = EditableHTML.get_editable_html('about')
     return render_template('main/about.html',
                            editable_html_obj=editable_html_obj)
-
-@main.route('/api/index')
-# @login_required
-def api_index():
-    """View all apis."""
-    return render_template('api/index.html')
-
-@main.route('/api/add')
-# @login_required
-def add_api():
-    return render_template('api/add.html')
