@@ -12,11 +12,7 @@ from wtforms.fields import (
 from wtforms.validators import InputRequired, Length
 
 class ParameterForm(Form):
-    name = TextField('Paramater Name', validators=[InputRequired(), Length(1, 500)])
-    param_type = SelectField('Parameter Type',
-                                choices=[('String, String'), ('Boolean, Boolean')],
-                                validators=[InputRequired()]
-                                )
+    name = TextField('Parameter Name', validators=[InputRequired(), Length(1, 500)])
     description = TextField('Description', validators=[InputRequired(), Length(1, 500)])
 
 class NewAPIForm(Form):
@@ -26,10 +22,9 @@ class NewAPIForm(Form):
                             validators=[InputRequired()]
                             )
     parameters = SelectMultipleField('Parameters',
-                            choices=[('Philadelphia', 'Philadelphia'), ('Pennsylvania', 'Pennsylvania')],
+                            choices=[('Name', 'Name'), ('Date of Birth', 'Date of Birth')],
                             validators=[InputRequired()]
                             )
-    params = FieldList(FormField(ParameterForm))
-    is_searchable = BooleanField('Searchable')
+    params = FieldList(FormField(ParameterForm), validators=[InputRequired()])
     description= TextAreaField('Description')
     submit = SubmitField('Add API')

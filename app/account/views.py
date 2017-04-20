@@ -271,23 +271,23 @@ def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
     return render_template('account/unconfirmed.html')
-
-
-@account.route('/all-services', methods=['GET'])
-@login_required
-def get_all_api's():
-
-
-@account.route('/single-services', methods=['GET'])
-@login_required
-def get_single_api():
-
-
-@account.route('/input-by-parameter', methods=['GET'])
-@login_required
-def get_single_api():
-
-
-@account.route('/add-api', methods=['POST'])
-@login_required
-def add_api():
+# 
+#
+# @account.route('/all-services', methods=['GET'])
+# @login_required
+# def get_all_api's():
+#
+#
+# @account.route('/single-services', methods=['GET'])
+# @login_required
+# def get_single_api():
+#
+#
+# @account.route('/input-by-parameter', methods=['GET'])
+# @login_required
+# def get_single_api():
+#
+#
+# @account.route('/add-api', methods=['POST'])
+# @login_required
+# def add_api():
