@@ -45,7 +45,7 @@ class Parameter(db.Model):
     __tablename__ = 'parameters'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
-    format = db.Column(db.String(64))
+    param_format = db.Column(db.String(64))
     count = db.Column(db.Integer)
     apis = db.relationship('Api', secondary='api_parameter_link')
 
@@ -55,11 +55,11 @@ class Parameter(db.Model):
     def incr_count(self):
         self.count += 1
 
-    def __init__(self, name, format, count):
+    def __init__(self, name, param_format, count):
         self.name = name
-        self.format = format
+        self.param_format = param_format
         self.count = count
 
     def __repr__(self):
-        return '<Parameter \'%s %s %s\'>' % (self.name, self.format,
+        return '<Parameter \'%s %s %s\'>' % (self.name, self.param_format,
             self.count)
