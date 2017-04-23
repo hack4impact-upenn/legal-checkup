@@ -182,3 +182,4 @@ def update_editor_contents():
     db.session.commit()
 
     return 'OK', 200
+
