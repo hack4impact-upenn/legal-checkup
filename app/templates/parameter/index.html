@@ -1,0 +1,28 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="ui text container">
+        <h1>View All Parameters</h1>
+        <table class="ui searchable sortable unstackable selectable celled table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Format</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for param in params %}
+            <tr>
+              <td>
+                  <a href="{{ url_for('parameter.get_parameter_info', param_id=param['id']) }}">{{ param['name']}}</a>
+              </td>
+              <td>
+                {{ param['param_format']}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        <a href="{{ url_for('parameter.add') }}"><button class="ui button">Add Parameter</button></a>
+    </div>
+{% endblock %}
