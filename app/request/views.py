@@ -21,9 +21,14 @@ def searchForApi():
 @request.route('/search_params', methods=['GET', 'POST'])
 def searchData():
     apiName = SearchForm().api.data
+    # params = [
+    #     {'name': "s", 'param_format': "String"},
+    #     {'name': "y", 'param_format': "Year"}
+    #     ]
+
     params = [
-        {'name': "s", 'param_format': "String"},
-        {'name': "y", 'param_format': "Year"}
+        {'name': "Title", 'param_format': "String"},
+        {'name': "Year", 'param_format': "Year"}
         ]
 
     paramForm = ParamsForm()
@@ -38,6 +43,9 @@ def searchData():
         for param in params:
             pName = param['name']
             paramData[pName] = paramForm[pName].data
+
+        paramData['s'] = paramForm['Title'].data
+        paramData['y'] = paramForm['Year'].data
 
         r = requests.get(url, params=paramData)
         data = r.content
