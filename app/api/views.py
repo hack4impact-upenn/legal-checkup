@@ -1,4 +1,4 @@
-from flask import flash, jsonify, redirect, render_template
+from flask import flash, jsonify, redirect, render_template, url_for
 from ..models import EditableHTML, Api, ApiParameterLink, Parameter
 
 from flask_login import login_required
@@ -25,7 +25,9 @@ def index():
 def add_api():
     """Create a new API."""
     form = NewAPIForm()
+    print('is this working3232')
     if form.validate_on_submit():
+    	print('is this working2')
         # parameters = []
         new_api = Api(
             name=form.name.data,
@@ -39,11 +41,12 @@ def add_api():
             flash('API {} successfully added'
                       .format(new_api.name),
                       'form-success')
-            return redirect('api/index.html')
+            return redirect(url_for('api.index'))
         except IntegrityError:
             db.session.rollback()
             flash('Database error occurred. Please try again.',
                   'form-error')
+    print('is this working23')
     return render_template('api/add.html', form=form)
 
 
