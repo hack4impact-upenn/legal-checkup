@@ -17,7 +17,8 @@ from . import api
 @api.route('/index')
 def index():
     """View all apis."""
-    return render_template('api/index.html')
+    apis = Api.query.all()
+    return render_template('api/index.html', apis = apis)
 
 
 @api.route('/add', methods=['GET', 'POST'])
