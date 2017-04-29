@@ -25,6 +25,5 @@ class NewAPIForm(Form):
                             choices=[('Name', 'Name'), ('Date of Birth', 'Date of Birth')],
                             validators=[InputRequired()]
                             )
-    # params = FieldList(FormField(ParameterForm), validators=[InputRequired()])
     description= TextAreaField('Description')
     submit = SubmitField('Add API')
