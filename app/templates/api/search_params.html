@@ -15,8 +15,8 @@
             'success': get_flashed_messages(category_filter=['form-success'])
         } %}
 
+        <h2>Fill in the paramters {# apiName #}</h2>
         {{ f.begin_form(form, flashes) }}
-          {{ f.render_form_field(form.api) }}
           {% for param in params %}
             {% set n = param['name'] %}
             {{ f.render_form_field(form[n]) }}

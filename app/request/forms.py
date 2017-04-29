@@ -13,5 +13,5 @@ class SearchForm(Form):
     submit = SubmitField('Search')
 
 class ParamsForm(Form):
-    api = StringField('API', validators=[InputRequired()])
+    # api = StringField('API', validators=[InputRequired()])
     submit = SubmitField('Submit')

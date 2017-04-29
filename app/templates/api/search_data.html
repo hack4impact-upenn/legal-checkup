@@ -8,20 +8,9 @@
           Search API's
         </h2>
 
-        {% set flashes = {
-            'error':   get_flashed_messages(category_filter=['form-error']),
-            'warning': get_flashed_messages(category_filter=['form-check-email']),
-            'info':    get_flashed_messages(category_filter=['form-info']),
-            'success': get_flashed_messages(category_filter=['form-success'])
-        } %}
-
+        <br>
         {{ data }}
 
-        {# 1. Use the key to access the value from data #}
-        {% for key in data %}
-          {{ data }}
-          {{ data[key] }}
-        {% endfor %}
 
 
       </div>
