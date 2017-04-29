@@ -16,10 +16,11 @@ from . import parameter
 @parameter.route('/')
 def index():
     """View all parameters."""
-    return render_template('parameter/index.html')
+    params = Parameter.query.all()
+    return render_template('parameter/index.html', params=params)
 
 @parameter.route('/add', methods=['GET', 'POST'])
-def add_parameter():
+def add():
     """Add parameter."""
     form = ParameterForm()
     if form.validate_on_submit():
@@ -47,4 +48,8 @@ def get_parameter_info(param_id):
 
 @parameter.route('/info', methods=['GET', 'POST'])
 def get_parameter_info_all():
-    id = Parameter.query.all()
+    params = Parameter.query.all()
+    params_to_jsonify = []
+    for param in params:
+        params_to_jsonify.append({'name': param.name, 'format': param.param_format, 'count': param.count})
+    return jsonify({'parameters': params_to_jsonify})
