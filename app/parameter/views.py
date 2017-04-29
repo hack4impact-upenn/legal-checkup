@@ -41,12 +41,12 @@ def add():
                   'form-error')
     return render_template('parameter/add.html', form=form)
 
-@parameter.route('/info/<int:param_id>', methods=['GET', 'POST'])
+@parameter.route('/info/<int:param_id>', methods=['GET'])
 def get_parameter_info(param_id):
     id = Parameter.query.get_or_404(param_id)
     return jsonify({'name': id.name, 'format': id.param_format, 'count': id.count})
 
-@parameter.route('/info', methods=['GET', 'POST'])
+@parameter.route('/info', methods=['GET'])
 def get_parameter_info_all():
     params = Parameter.query.all()
     params_to_jsonify = []
