@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %}
+
+{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
+    <a class="column" href="{{ url_for(endpoint) }}">
+        <div class="ui padded segment">
+            <h3 class="ui header">
+                {% if icon is not none %}
+                    <i class="{{ icon }}"></i>
+                {% endif %}
+                <div class="content">
+                    {{ title }}
+                    {% if description is not none %}
+                        <div class="sub header">
+                            {{ description }}
+                        </div>
+                    {% endif %}
+                </div>
+            </h3>
+        </div>
+    </a>
+{% endmacro %}
+
+{% block content %}
+<div class="ui text container">
+    <h1>Home</h1>
+      <div class="ui three column stackable grid">
+          {{ dashboard_option('Call APIs', 'api.index',
+                              description=None, icon=None) }}
+          {{ dashboard_option('View APIs', 'api.index',
+                              description=None, icon=None) }}
+          {{ dashboard_option('View Parameters', 'parameter.index',
+                              description=None, icon=None) }}
+          {{ dashboard_option('Add API', 'api.add_api',
+                              description=None, icon=None) }}
+          {{ dashboard_option('Add Parameter', 'parameter.add',
+                              description=None, icon=None) }}
+      </div>
+</div>
+{% endblock %}
