@@ -30,6 +30,7 @@ def add_api():
             name=form.name.data,
             region=form.region.data,
             description=form.description.data,
+            url=form.url.data
         )
         db.session.add(new_api)
         try:
@@ -44,8 +45,19 @@ def add_api():
                   'form-error')
     return render_template('api/add.html', form=form)
 
+@api.route('/info', methods=['GET'])
+def get_api_info_all():
+    apis = Api.query.all()
+    apis_to_jsonify = []
+    for api in apis:
+        apis_to_jsonify.append({
+            'name': api.name,
+            'region': api.region,
+            'description': api.description,
+            'url': api.url})
+    return jsonify({'APIs': apis_to_jsonify})
 
 @api.route('/info/<int:api_id>', methods=['GET'])
 def get_api_info(api_id):
     id = Api.query.get_or_404(api_id)
-    return jsonify({'name': id.name, 'region': id.region, 'description' : id.description})
+    return jsonify({'name': id.name, 'region': id.region, 'description' : id.description, 'url': id.url})
