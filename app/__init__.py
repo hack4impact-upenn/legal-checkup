@@ -7,6 +7,7 @@ from flask_assets import Environment
 from flask_wtf import CsrfProtect
 from flask_compress import Compress
 from flask_rq import RQ
+from flask_restful import Api
 
 from config import config
 from .assets import app_css, app_js, vendor_css, vendor_js
@@ -39,6 +40,7 @@ def create_app(config_name):
     csrf.init_app(app)
     compress.init_app(app)
     RQ(app)
+    Api(app)
 
     # Register Jinja template functions
     from .utils import register_template_utils
@@ -65,17 +67,22 @@ def create_app(config_name):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .api import api as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix='/api')
+
     from .account import account as account_blueprint
     app.register_blueprint(account_blueprint, url_prefix='/account')
 
     from .admin import admin as admin_blueprint
     app.register_blueprint(admin_blueprint, url_prefix='/admin')
 
-
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
 
     from .request import request as request_blueprint
     app.register_blueprint(request_blueprint, url_prefix='/request')
+
+    from .parameter import parameter as parameter_blueprint
+    app.register_blueprint(parameter_blueprint, url_prefix='/parameter')
 
     return app

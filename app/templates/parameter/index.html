@@ -1,28 +1,28 @@
 {% extends 'layouts/base.html' %}
+
 {% block content %}
     <div class="ui text container">
-        <h1>API Index</h1>
-    	<h1>View All API's</h1>
+        <h1>View All Parameters</h1>
         <table class="ui searchable sortable unstackable selectable celled table">
           <thead>
             <tr>
-             <th>Name</th>
-    	     <th>Description</th>
+              <th>Name</th>
+              <th>Format</th>
             </tr>
           </thead>
           <tbody>
-            {% for api in apis %}
+            {% for param in params %}
             <tr>
               <td>
-                  <a href="{{ url_for('api.get_api_info', api_id=api['id']) }}">{{ api['name']}}</a>
+                  <a href="{{ url_for('parameter.get_parameter_info', param_id=param['id']) }}">{{ param['name']}}</a>
               </td>
               <td>
-                  {{ api['description']}}
+                {{ param['param_format']}}
               </td>
             </tr>
             {% endfor %}
           </tbody>
         </table>
-        <a href="{{ url_for('api.add_api') }}"><button class="ui button">Add API</button></a>
+        <a href="{{ url_for('parameter.add') }}"><button class="ui button">Add Parameter</button></a>
     </div>
 {% endblock %}
