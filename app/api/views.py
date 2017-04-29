@@ -29,7 +29,7 @@ def add_api():
         new_api = Api(
             name=form.name.data,
             region=form.region.data,
-            description=form.description.data
+            description=form.description.data,
         )
         db.session.add(new_api)
         try:
