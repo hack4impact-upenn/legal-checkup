@@ -1,0 +1,50 @@
+from flask import flash, jsonify, redirect, render_template, request
+from flask_login import login_required
+from flask_restful import Resource, Api
+from flask_wtf.file import InputRequired
+from sqlalchemy.exc import IntegrityError
+from wtforms.fields import SelectField
+
+from ..models import EditableHTML, Parameter
+from .forms import (
+    ParameterForm
+)
+
+from .. import db
+from . import parameter
+
+@parameter.route('/')
+def index():
+    """View all parameters."""
+    return render_template('parameter/index.html')
+
+@parameter.route('/add', methods=['GET', 'POST'])
+def add_parameter():
+    """Add parameter."""
+    form = ParameterForm()
+    if form.validate_on_submit():
+        new_param = Parameter(
+            name=form.name.data,
+            param_format=form.param_format.data,
+            count=0
+        )
+        db.session.add(new_param)
+        try:
+            db.session.commit()
+            flash('Parameter successfully added',
+                        'form-success')
+            return redirect('parameter/')
+        except IntegrityError:
+            db.session.rollback()
+            flash('Database error occurred. Please try again.',
+                  'form-error')
+    return render_template('parameter/add.html', form=form)
+
+@parameter.route('/info/<int:param_id>', methods=['GET', 'POST'])
+def get_parameter_info(param_id):
+    id = Parameter.query.get_or_404(param_id)
+    return jsonify({'name': id.name, 'format': id.param_format, 'count': id.count})
+
+@parameter.route('/info', methods=['GET', 'POST'])
+def get_parameter_info_all():
+    id = Parameter.query.all()
