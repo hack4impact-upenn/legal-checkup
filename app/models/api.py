@@ -21,6 +21,7 @@ class Api(db.Model):
     __tablename__ = 'apis'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), unique=True)
+    url = db.Column(db.String(128), unique=True)
     region = db.Column(db.String(64))
     description = db.Column(db.String(128))
     parameters = db.relationship('Parameter', secondary='api_parameter_link')
@@ -33,13 +34,14 @@ class Api(db.Model):
     def get_params(self):
         return ApiParameterLink.query.filter_by(api_id=self.id).all()
 
-    def __init__(self, name, region, description):
+    def __init__(self, name, url, region, description):
         self.name = name
+        self.url = url
         self.region = region
         self.description = description
 
     def __repr__(self):
-        return '<Api \'%s %s %s\'>' % (self.name, self.region, self.description)
+        return '<Api \'%s %s %s %s\'>' % (self.name, self.url, self.region, self.description)
 
 class Parameter(db.Model):
     __tablename__ = 'parameters'
