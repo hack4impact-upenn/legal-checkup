@@ -14,7 +14,7 @@ from .forms import (
 from .. import db
 from . import api
 
-@api.route('/index')
+@api.route('/')
 def index():
     """View all apis."""
     apis = Api.query.all()
