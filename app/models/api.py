@@ -25,14 +25,6 @@ class Api(db.Model):
     description = db.Column(db.String(128))
     parameters = db.relationship('Parameter', secondary='api_parameter_link')
 
-    def add_params(self, params):
-        for param, description in params:
-            self.parameter_associations.append(ApiParameterLink(api=self,
-                param=param, description=description))
-
-    def get_params(self):
-        return ApiParameterLink.query.filter_by(api_id=self.id).all()
-
     def __init__(self, name, region, description):
         self.name = name
         self.region = region
@@ -40,6 +32,14 @@ class Api(db.Model):
 
     def __repr__(self):
         return '<Api \'%s %s %s\'>' % (self.name, self.region, self.description)
+
+    def add_params(self, params):
+        for param, description in params:
+            self.parameter_associations.append(ApiParameterLink(api=self,
+                param=param, description=description))
+
+    def get_params(self):
+        return ApiParameterLink.query.filter_by(api_id=self.id).all()
 
 class Parameter(db.Model):
     __tablename__ = 'parameters'
@@ -49,12 +49,6 @@ class Parameter(db.Model):
     count = db.Column(db.Integer)
     apis = db.relationship('Api', secondary='api_parameter_link')
 
-    def get_apis(self):
-        return ApiParameterLink.query.filter_by(parameter_id=self.id).all()
-
-    def incr_count(self):
-        self.count += 1
-
     def __init__(self, name, param_format, count):
         self.name = name
         self.param_format = param_format
@@ -63,3 +57,9 @@ class Parameter(db.Model):
     def __repr__(self):
         return '<Parameter \'%s %s %s\'>' % (self.name, self.param_format,
             self.count)
+
+    def get_apis(self):
+        return ApiParameterLink.query.filter_by(parameter_id=self.id).all()
+
+    def incr_count(self):
+        self.count += 1
