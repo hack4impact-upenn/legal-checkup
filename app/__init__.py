@@ -79,7 +79,12 @@ def create_app(config_name):
     from .api import api as api_blueprint
     app.register_blueprint(api_blueprint, url_prefix='/api')
 
+<<<<<<< HEAD
     from .parameter import parameter as parameter_blueprint
     app.register_blueprint(parameter_blueprint, url_prefix='/parameter')
+=======
+    from .request import request as request_blueprint
+    app.register_blueprint(request_blueprint, url_prefix='/request')
+>>>>>>> 892ace9cab4b7093012cbac6905dec813652bcfe
 
     return app
