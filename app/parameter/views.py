@@ -53,3 +53,15 @@ def get_parameter_info_all():
     for param in params:
         params_to_jsonify.append({'name': param.name, 'format': param.param_format, 'count': param.count})
     return jsonify({'parameters': params_to_jsonify})
+
+
+@parameter.route('/request/<string:param_name>', methods=['GET'])
+def get_parameter_api(param_name):
+    apis = Parameter.query.get_or_404(param_name)
+    all_api_urls = []
+    for api in apis:
+         r = request.head(url)
+        if r.status_code != 200:
+            continue
+        all_api_urls.append(url_for(api.id))
+    return all_api_urls

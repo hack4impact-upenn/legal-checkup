@@ -5,6 +5,7 @@ from flask_login import login_required
 from sqlalchemy.exc import IntegrityError
 from wtforms.fields import SelectField
 from flask_wtf.file import InputRequired
+import requests
 
 from .forms import (
     NewAPIForm,
@@ -60,4 +61,17 @@ def get_api_info_all():
 @api.route('/info/<int:api_id>', methods=['GET'])
 def get_api_info(api_id):
     id = Api.query.get_or_404(api_id)
+<<<<<<< HEAD
     return jsonify({'name': id.name, 'region': id.region, 'description' : id.description, 'url': id.url})
+=======
+    return jsonify({'name': id.name, 'region': id.region, 'description' : id.description})
+
+
+@api.route('/request/<string:api_name>', methods=['GET'])
+def get_api_name(api_name):
+    url = Api.query.get_or_404(api_name)
+    r = request.head(url)
+    if r.status_code != 200:
+        return render_template('api/requests.html')
+    return redirect(url_for('api.name'))
+>>>>>>> f60c361ab6b63ed9e8676c567abafd4fefa3bba9
