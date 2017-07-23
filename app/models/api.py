@@ -26,10 +26,9 @@ class Api(db.Model):
     description = db.Column(db.String(128))
     parameters = db.relationship('Parameter', secondary='api_parameter_link')
 
-    def add_params(self, params):
-        for param, description in params:
-            self.parameter_associations.append(ApiParameterLink(api=self,
-                param=param, description=description))
+    def add_param(self, param, description):
+        self.parameter_associations.append(ApiParameterLink(api=self,
+            param=param, description=description))
 
     def get_params(self):
         return ApiParameterLink.query.filter_by(api_id=self.id).all()

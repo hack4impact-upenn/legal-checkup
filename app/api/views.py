@@ -7,6 +7,8 @@ from wtforms.fields import SelectField
 from flask_wtf.file import InputRequired
 import requests
 
+import sys # For debugging
+
 from .forms import (
     NewAPIForm,
     ParameterForm
@@ -14,6 +16,7 @@ from .forms import (
 
 from .. import db
 from . import api
+from ..models import Parameter
 
 @api.route('/')
 def index():
@@ -21,18 +24,32 @@ def index():
     apis = Api.query.all()
     return render_template('api/index.html', apis=apis)
 
+def get_all_params():
+    params = Parameter.query.all()
+    choices_to_return = []
+    for param in params:
+        choices_to_return.append((param.name, param.name))
+    return choices_to_return
 
 @api.route('/add', methods=['GET', 'POST'])
 def add_api():
     """Create a new API."""
     form = NewAPIForm()
-    if form.validate_on_submit():
+    form.parameters.choices = get_all_params()
+    if form.submit.data and form.validate_on_submit():
         new_api = Api(
             name=form.name.data,
             region=form.region.data,
             description=form.description.data,
             url=form.url.data
         )
+
+        for param_data in form.parameters.data:
+            param = Parameter.query.filter_by(name=param_data).first()
+            if param is not None:
+                # TODO: Ask users to give a param description when adding params
+                new_api.add_param(param, "Parameter description")
+
         db.session.add(new_api)
         try:
             db.session.commit()

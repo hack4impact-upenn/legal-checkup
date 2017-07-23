@@ -22,7 +22,7 @@ class NewAPIForm(Form):
                             validators=[InputRequired()]
                             )
     parameters = SelectMultipleField('Parameters',
-                            choices=[('Name', 'Name'), ('Date of Birth', 'Date of Birth')],
+                            choices=[],
                             validators=[InputRequired()]
                             )
     url = TextField('API URL', validators=[InputRequired(), Length(1, 500)])
