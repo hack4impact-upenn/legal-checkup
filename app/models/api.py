@@ -12,6 +12,7 @@ class ApiParameterLink(db.Model):
         self.api = api
         self.parameter = param
         self.parameter_description = description
+        param.incr_count
 
     def __repr__(self):
         return '<ApiParameterLink \'%s %s %s\'>' % (self.api.name, self.parameter.name,

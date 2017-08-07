@@ -27,11 +27,13 @@
 
                 {{ f.render_form_field(form.parameters) }}
 
-                {% for param in form.params %}
-                  {% for field in param %}
+                {% for param in form.new_parameter %}
+                  {% for field in param if field.widget.input_type != 'hidden' %}
                     {{ f.render_form_field(field) }}
                   {% endfor %}
                 {% endfor %}
+
+                {{ f.render_form_field(form.add_parameter) }}
 
                 {{ f.render_form_field(form.description) }}
 

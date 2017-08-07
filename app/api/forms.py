@@ -12,8 +12,9 @@ from wtforms.fields import (
 from wtforms.validators import InputRequired, Length
 
 class ParameterForm(Form):
-    name = TextField('Parameter Name', validators=[InputRequired(), Length(1, 500)])
+    param_name = TextField('Parameter Name', validators=[InputRequired(), Length(1, 500)])
     description = TextField('Description', validators=[InputRequired(), Length(1, 500)])
+    param_format = TextField('Format', validators=[InputRequired(), Length(1, 500)])
 
 class NewAPIForm(Form):
     name = TextField('Name of API', validators=[InputRequired(), Length(1, 500)])
@@ -21,11 +22,13 @@ class NewAPIForm(Form):
                             choices=[('Philadelphia', 'Philadelphia'), ('Pennsylvania', 'Pennsylvania')],
                             validators=[InputRequired()]
                             )
+    # Parameters are dynamically populated when rendered -- see views.py.
     parameters = SelectMultipleField('Parameters',
                             choices=[],
                             validators=[InputRequired()])
-
-    # TODO: Add a link to add a new parameter.
+    # TODO: Removing parameters
+    new_parameter = FieldList(FormField(ParameterForm), min_entries=0)
+    add_parameter = SubmitField('Add a new parameter')
     url = TextField('API URL', validators=[InputRequired(), Length(1, 500)])
     description= TextAreaField('Description')
     submit = SubmitField('Add API')

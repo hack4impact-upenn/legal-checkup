@@ -36,6 +36,10 @@ def add_api():
     """Create a new API."""
     form = NewAPIForm()
     form.parameters.choices = get_all_params()
+
+    if form.add_parameter.data:
+        form.new_parameter.append_entry()
+
     if form.submit.data and form.validate_on_submit():
         new_api = Api(
             name=form.name.data,
@@ -44,11 +48,21 @@ def add_api():
             url=form.url.data
         )
 
+        # Links the parameters to the new API.
         for param_data in form.parameters.data:
             param = Parameter.query.filter_by(name=param_data).first()
             if param is not None:
                 # TODO: Ask users to give a param description when adding params.
                 new_api.add_param(param, "Parameter-description")
+
+        # Creates the new parameters and links them to the API.
+        for new_param in form.new_parameter:
+            param = Parameter(
+                name=new_param.param_name.data,
+                param_format=new_param.param_format.data,
+                count=0
+                )
+            new_api.add_param(param, new_param.description)
 
         db.session.add(new_api)
         try:
