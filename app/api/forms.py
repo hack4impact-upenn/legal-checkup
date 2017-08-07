@@ -23,8 +23,9 @@ class NewAPIForm(Form):
                             )
     parameters = SelectMultipleField('Parameters',
                             choices=[],
-                            validators=[InputRequired()]
-                            )
+                            validators=[InputRequired()])
+
+    # TODO: Add a link to add a new parameter.
     url = TextField('API URL', validators=[InputRequired(), Length(1, 500)])
     description= TextAreaField('Description')
     submit = SubmitField('Add API')

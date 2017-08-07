@@ -31,7 +31,11 @@ class Api(db.Model):
             param=param, description=description))
 
     def get_params(self):
-        return ApiParameterLink.query.filter_by(api_id=self.id).all()
+        param_links = ApiParameterLink.query.filter_by(api_id=self.id).all()
+        params = []
+        for link in param_links:
+            params.append(link.parameter)
+        return params
 
     def __init__(self, name, url, region, description):
         self.name = name

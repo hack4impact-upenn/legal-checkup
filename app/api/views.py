@@ -47,8 +47,8 @@ def add_api():
         for param_data in form.parameters.data:
             param = Parameter.query.filter_by(name=param_data).first()
             if param is not None:
-                # TODO: Ask users to give a param description when adding params
-                new_api.add_param(param, "Parameter description")
+                # TODO: Ask users to give a param description when adding params.
+                new_api.add_param(param, "Parameter-description")
 
         db.session.add(new_api)
         try:
@@ -68,18 +68,19 @@ def get_api_info_all():
     apis = Api.query.all()
     apis_to_jsonify = []
     for api in apis:
-        apis_to_jsonify.append({
-            'name': api.name,
-            'region': api.region,
-            'description': api.description,
-            'url': api.url})
+        apis_to_jsonify.append(get_api_info(api.id))
     return jsonify({'APIs': apis_to_jsonify})
 
 @api.route('/info/<int:api_id>', methods=['GET'])
 def get_api_info(api_id):
     id = Api.query.get_or_404(api_id)
-    return jsonify({'name': id.name, 'region': id.region, 'description' : id.description, 'url': id.url})
-
+    return jsonify({
+        'name': id.name,
+        'region': id.region,
+        'description' : id.description,
+        'url': id.url,
+        'parameters': [ p.name for p in id.get_params() ]
+        })
 
 @api.route('/request/<string:api_name>', methods=['GET'])
 def get_api_name(api_name):
