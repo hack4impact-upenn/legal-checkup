@@ -25,7 +25,7 @@ class NewAPIForm(Form):
     # Parameters are dynamically populated when rendered -- see views.py.
     parameters = SelectMultipleField('Parameters',
                             choices=[],
-                            validators=[InputRequired()])
+                            validators=[])
     # TODO: Removing parameters
     new_parameter = FieldList(FormField(ParameterForm), min_entries=0)
     add_parameter = SubmitField('Add a new parameter')
