@@ -6,7 +6,6 @@
       <div class="twelve wide column"
         <h2 class="ui header">
           Search API's
-          <!-- <div class="sub header"></div> -->
         </h2>
 
         {% set flashes = {
@@ -17,9 +16,12 @@
         } %}
 
         {{ f.begin_form(form, flashes) }}
-          {{ f.render_form_field(form.api) }}
+          {% for param in params %}
+            {% set n = param['name'] %}
+            {{ f.render_form_field(form[n]) }}
+            {# TODO: display param.param_format #}
+          {% endfor%}
           {{ f.render_form_field(form.submit) }}
-
         {{ f.end_form() }}
 
       </div>

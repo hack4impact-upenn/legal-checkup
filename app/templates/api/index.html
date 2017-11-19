@@ -6,8 +6,9 @@
         <table class="ui searchable sortable unstackable selectable celled table">
           <thead>
             <tr>
-             <th>Name</th>
-    	     <th>Description</th>
+              <th>Name</th>
+    	        <th>Description</th>
+              <th>URL</th>
             </tr>
           </thead>
           <tbody>
@@ -19,6 +20,9 @@
               <td>
                   {{ api['description']}}
               </td>
+              <td>
+                  {{ api['url']}}
+              </t>
             </tr>
             {% endfor %}
           </tbody>
